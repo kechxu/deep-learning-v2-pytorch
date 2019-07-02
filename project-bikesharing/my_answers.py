@@ -90,10 +90,12 @@ class NeuralNetwork(object):
         # Output error - Replace this value with your calculations.
         error = y - final_outputs # Output layer error is the difference between desired target and actual output.
 
-        error_term = error * final_outputs * (1 - final_outputs)
+        error_term = -2.0 * error * hidden_outputs  # * final_outputs * (1 - final_outputs)
+        print(error_term)
         
         # Calculate the hidden layer's contribution to the error
-        hidden_error = (error_term * self.weights_hidden_to_output).reshape(self.hidden_nodes,)
+        hidden_error = error_term * self.weights_hidden_to_output.reshape(self.hidden_nodes,)
+        print(hidden_error)
         
         # Backpropagated error terms - Replace these values with your calculations.
         
@@ -136,8 +138,8 @@ class NeuralNetwork(object):
         hidden_outputs = self.activation_function(hidden_inputs) # signals from hidden layer
         
         # Output layer - Replace these values with the appropriate calculations.
-        final_inputs = np.dot(hidden_outputs, self.weights_hidden_to_output) # signals into final output layer
-        final_outputs = self.activation_function(final_inputs) # signals from final output layer 
+        final_outputs = np.dot(hidden_outputs, self.weights_hidden_to_output) # signals into final output layer
+        # final_outputs = self.activation_function(final_inputs) # signals from final output layer 
         
         return final_outputs
 
@@ -145,7 +147,7 @@ class NeuralNetwork(object):
 #########################################################
 # Set your hyperparameters here
 ##########################################################
-iterations = 100
+iterations = 2000
 learning_rate = 0.1
-hidden_nodes = 2
+hidden_nodes = 25
 output_nodes = 1
